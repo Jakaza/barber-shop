@@ -6,6 +6,8 @@ import tut.ac.za.barbershop.entities.Customer;
 import tut.ac.za.barbershop.repository.CustomerRepository;
 import tut.ac.za.barbershop.utils.PasswordEncryptor;
 
+import java.util.Date;
+
 @Service
 public class CustomerServiceImpl implements CustomerService{
 
@@ -23,6 +25,8 @@ public class CustomerServiceImpl implements CustomerService{
         customer.setAge(customerDto.getAge());
         customer.setEmail(customerDto.getEmail());
         customer.setGender(customerDto.getGender());
+        customer.setSurname(customerDto.getSurname());
+        customer.setCreationDate(new Date());
         customer.setPassword(PasswordEncryptor.hashPassword(customerDto.getPassword()));
         customerRepository.save(customer);
     }

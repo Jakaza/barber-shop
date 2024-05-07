@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import tut.ac.za.barbershop.dto.CustomerDto;
+import tut.ac.za.barbershop.dto.CustomerLoginDto;
 import tut.ac.za.barbershop.entities.Customer;
 import tut.ac.za.barbershop.service.CustomerService;
 import tut.ac.za.barbershop.utils.SessionManager;
@@ -29,17 +30,23 @@ public class Auth {
     @GetMapping("/")
     public String home(Model model , HttpSession session){
         Customer customer = sessionManager.getCustomerFromSession(session.getId());
-//        if (customer != null) {
-//            session.setAttribute("authenticated", true);
-//            model.addAttribute("user_id", user.getId());
-//            return "index";
-//        }else{
-//            return "redirect:/login";
-//        }
-
+        if(customer != null){
+            return "redirect:/book";
+        }
         return "index";
     }
 
+    @GetMapping("/book")
+    public String barber(Model model , HttpSession session){
+        Customer customer = sessionManager.getCustomerFromSession(session.getId());
+        if (customer != null) {
+            session.setAttribute("authenticated", true);
+            model.addAttribute("user_id", customer.getId());
+            return "frontend";
+        }else{
+            return "redirect:/login";
+        }
+    }
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model){
@@ -48,13 +55,20 @@ public class Auth {
         return "register";
     }
 
+
     @GetMapping("/login")
     public String showLoginForm(Model model){
-        CustomerDto customer = new CustomerDto();
-        model.addAttribute("customer", customer);
+        CustomerLoginDto customer = new CustomerLoginDto();
+        model.addAttribute("customerLogin", customer);
         return "login";
     }
 
+    @GetMapping("/logout")
+    public String customerLogout(Model model , HttpSession session){
+        String sessionId = session.getId();
+        sessionManager.removeSession(sessionId);
+        return "redirect:/";
+    }
 
     @PostMapping("/register/save")
     public String registration(@Valid @ModelAttribute("customer") CustomerDto customerDto,
@@ -77,11 +91,12 @@ public class Auth {
     }
 
     @PostMapping("/auth/login")
-    public String loginUser(@Valid @ModelAttribute("customer") CustomerDto customerDto,
+    public String loginUser(@Valid @ModelAttribute("customerLogin") CustomerLoginDto customerLoginDto,
                             BindingResult result,
                             Model model , HttpSession session){
-        Customer customer = customerService.customerLogin(customerDto.getEmail(), customerDto.getPassword());
-        if (customerDto.getEmail().equals("myadmin@gmail.com") && customerDto.getPassword().equals("admin")) {
+        Customer customer = customerService.customerLogin(customerLoginDto.getEmail(), customerLoginDto.getPassword());
+
+        if (customerLoginDto.getEmail().equals("myadmin@gmail.com") && customerLoginDto.getPassword().equals("admin")) {
             Customer admin = new Customer();
             admin.setEmail("myadmin@gamil.com");
             admin.setPassword("admin");
@@ -89,7 +104,7 @@ public class Auth {
             return "redirect:/dashboard";
         }
         if(result.hasErrors()){
-            model.addAttribute("customer", customerDto);
+            model.addAttribute("customerLogin", customerLoginDto);
             return "/login";
         }
         if (customer != null) {

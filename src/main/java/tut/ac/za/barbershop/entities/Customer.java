@@ -119,6 +119,15 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "za.ac.tut.Person[ id=" + id + " ]";
+        return "Customer{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                ", age=" + age +
+                ", password='" + password + '\'' +
+                ", creationDate=" + creationDate +
+                '}';
     }
 }
