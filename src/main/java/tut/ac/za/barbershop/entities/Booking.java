@@ -3,7 +3,6 @@ package tut.ac.za.barbershop.entities;
 
 import jakarta.persistence.*;
 
-import java.sql.Time;
 import java.util.Date;
 
 @Entity
@@ -14,9 +13,8 @@ public class Booking {
     private Long id;
     private String name;
     private String contacts;
-    private Time time;
+    private String time;
     private Date date;
-    private Integer numPeople;
     private String branch;
     private String style;
     private String status;
@@ -28,12 +26,11 @@ public class Booking {
     public Booking() {
     }
 
-    public Booking(String name, String contacts, Time time, Date date, Integer numPeople, String branch, String style, String status, Date creationDate, Customer customer) {
+    public Booking(String name, String contacts, String time, Date date, String branch, String style, String status, Date creationDate, Customer customer) {
         this.name = name;
         this.contacts = contacts;
         this.time = time;
         this.date = date;
-        this.numPeople = numPeople;
         this.branch = branch;
         this.style = style;
         this.status = status;
@@ -41,13 +38,12 @@ public class Booking {
         this.customer = customer;
     }
 
-    public Booking(Long id, String name, String contacts, Time time, Date date, Integer numPeople, String branch, String style, String status, Date creationDate, Customer customer) {
+    public Booking(Long id, String name, String contacts, String time, Date date, String branch, String style, String status, Date creationDate, Customer customer) {
         this.id = id;
         this.name = name;
         this.contacts = contacts;
         this.time = time;
         this.date = date;
-        this.numPeople = numPeople;
         this.branch = branch;
         this.style = style;
         this.status = status;
@@ -79,11 +75,11 @@ public class Booking {
         this.contacts = contacts;
     }
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -95,13 +91,6 @@ public class Booking {
         this.date = date;
     }
 
-    public Integer getNumPeople() {
-        return numPeople;
-    }
-
-    public void setNumPeople(Integer numPeople) {
-        this.numPeople = numPeople;
-    }
 
     public String getBranch() {
         return branch;
