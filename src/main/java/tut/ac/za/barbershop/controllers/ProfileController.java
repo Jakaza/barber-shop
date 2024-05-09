@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import tut.ac.za.barbershop.dto.BookingDto;
 import tut.ac.za.barbershop.entities.Booking;
 import tut.ac.za.barbershop.entities.Customer;
 import tut.ac.za.barbershop.service.BookingService;
@@ -31,8 +30,7 @@ public class ProfileController {
             return "redirect:/login";
 
         }else{
-            List<Booking> bookings = bookingService.getBookings(customer.getId());
-
+            List<Booking> bookings = bookingService.getBookingsById(customer.getId());
             if (bookings != null && !bookings.isEmpty()) {
                 System.out.println("List of bookings:");
                 for (Booking booking : bookings) {

@@ -46,6 +46,10 @@
                                 <a class="nav-link click-scroll" href="#section_1">Admin Page</a>
                             </li>
 
+                            <li class="nav-item">
+                                <a class="nav-link "  th:href="@{/logout}">Log-out</a>
+                            </li>
+
                         </ul>
                     </div>
                 </nav>
@@ -56,7 +60,7 @@
                             
                             <p class="pt-5">Admin Menu</p>
                             
-                            <a href="ViewBookingsServlet.do" class="btn btn-primary mb-4">View All Bookings</a>  <br>
+                            <a  th:href="@{/all-bookings}" class="btn btn-primary mb-4">View All Bookings</a>  <br>
                             
                             <a href="ViewTodaysBookingServlet.do" class="btn btn-primary mb-4">View All Today's Bookings</a>  <br>
                             

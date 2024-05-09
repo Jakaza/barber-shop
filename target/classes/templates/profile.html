@@ -44,6 +44,9 @@
                             <li class="nav-item">
                                 <a class="nav-link click-scroll" href="#section_1">Profile Page</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link "  th:href="@{/logout}">Log-out</a>
+                            </li>
                         </ul>
                     </div>
                 </nav>
@@ -51,7 +54,8 @@
                     <section class=" d-flex justify-content-center align-items-center" id="section_1">
 
                         <div class="container">
-                            <a href="bookings_page.jsp" class="btn btn-success mt-3">Home page</a>
+                            <br>
+                            <a  th:href="@{/book}" class="btn btn-success mt-3">Home page</a>
                             <p class="pt-5">Profile</p>
                             <table>
                                 <tr>

@@ -32,6 +32,9 @@ public class AuthController {
     public String home(Model model , HttpSession session){
         Customer customer = sessionManager.getCustomerFromSession(session.getId());
         if(customer != null){
+            if(customer.getEmail().equals("myadmin@gmail.com") && customer.getPassword().equals("admin")){
+                return "redirect:/dashboard";
+            }
             return "redirect:/book";
         }
         return "index";
