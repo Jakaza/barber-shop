@@ -1,8 +1,15 @@
+<%-- 
+    Document   : gender_selection
+    Created on : 22 May 2023, 10:14:44 AM
+    Author     : Student
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-    <head>
+<html>
+     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <title>Barber Shop - Login to book a seat</title>
+      <title>Gentlemen's Barber Shop - HTML CSS Template</title>
 
         <!-- CSS FILES -->        
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,11 +18,11 @@
 
         <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500&display=swap" rel="stylesheet">
 
-        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
 
-        <link href="/css/bootstrap-icons.css" rel="stylesheet">
+        <link href="css/bootstrap-icons.css" rel="stylesheet">
 
-        <link href="/css/templatemo-barber-shop.css" rel="stylesheet">
+        <link href="css/templatemo-barber-shop.css" rel="stylesheet">
 
         <link rel="stylesheet" href="/css/index.css">
         
@@ -31,6 +38,8 @@ https://templatemo.com/tm-585-barber-shop
     </head>
     
     <body>
+        
+        <% String error = request.getParameter("error"); %>
 
         <div class="container-fluid">
             <div class="row">
@@ -42,8 +51,8 @@ https://templatemo.com/tm-585-barber-shop
                 <nav id="sidebarMenu" class="col-md-4 col-lg-3 d-md-block sidebar collapse p-0">
 
                     <div class="position-sticky sidebar-sticky d-flex flex-column justify-content-center align-items-center">
-                        <a class="navbar-brand" th:href="@{/}">
-                            <img src="/images/templatemo-barber-logo.png" class="logo-image img-fluid" align="">
+                        <a class="navbar-brand" href="index.html">
+                            <img src="images/templatemo-barber-logo.png" class="logo-image img-fluid" align="">
                         </a>
 
                         <ul class="nav flex-column">
@@ -53,8 +62,7 @@ https://templatemo.com/tm-585-barber-shop
 
 
                             <li class="nav-item">
-                                <p>Don't have an account? create one</p>
-                                <a class="nav-link click-scroll"  th:href="@{/register}">Register</a>
+                                <p>Customer Selected by gender</p>
                             </li>
                         </ul>
                     </div>
@@ -63,29 +71,25 @@ https://templatemo.com/tm-585-barber-shop
                     <section class=" d-flex justify-content-center align-items-center" id="section_1">
                             
                             <div class="container mt-5">
-                                <h3 class="pb-5">Login Into Your Account</h3>
-
-                                <div th:if="${error}" >
-                                    <p class="pt-2 text-danger small" th:text="${error}"  ></p>
-                                </div>
-
-                                <form class="row g-3 col-md-6"  th:action="@{/auth/login}"  th:object="${customerLogin}"  method="POST">
+                                <h3 class="pb-5">Find customer by Gender.</h3>
+                                
+                                
+                                
+                                <form class="row g-3 col-md-6"   action="ViewCustomerByGender.do" method="POST">
 
                                       <div class="mb-3">
-                                        <label for="email" class="form-label">Email : </label>
-                                          <p class="pt-1 text-danger small" th:errors = "*{email}"  th:if="${#fields.hasErrors('email')}" ></p>
-                                        <input type="text" name="email" class="form-control" id="email" placeholder="Email">
-                                      </div>
-
-                                      <div class="mb-3">
-                                        <label for="password" class="form-label">Password : </label>
-                                          <p class="pt-1 text-danger small" th:errors = "*{password}"  th:if="${#fields.hasErrors('password')}" ></p>
-                                        <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                                        <label for="gender" class="form-label">Select Gender</label>
+                                        <select name="gender" class="form-select" aria-label="">
+                                            <option selected>Select Gender</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                          </select>
+                                        
                                       </div>
 
 
                                       <div class="mb-1">
-                                        <input type="submit" class="btn btn-primary" value="Login">
+                                        <input type="submit" class="btn btn-primary" value="Find Customer">
                                       </div>
                                 </form>
                                 
@@ -102,9 +106,9 @@ https://templatemo.com/tm-585-barber-shop
                     </section>
             </div>
         <!-- JAVASCRIPT FILES -->
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
-        <script src="/js/click-scroll.js"></script>
-        <script src="/js/custom.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/click-scroll.js"></script>
+        <script src="js/custom.js"></script>
     </body>
 </html>

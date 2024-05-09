@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Barber Shop - HTML CSS Template</title>
+        <title>Barber Shop - Book a seat to get yourself fresh hair cut</title>
 
         <!-- CSS FILES -->        
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +23,15 @@
         <link href="/css/templatemo-barber-shop.css" rel="stylesheet">
 
         <link rel="stylesheet" href="/css/index.css">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </head>
+
+    <style>
+        .services-thumb-price {
+            color: white;
+            padding: 10px; /* Adjust the padding value as needed */
+        }
+    </style>
     
     <body>
 
@@ -57,7 +65,7 @@
                             </li>
                             
                                                         <li class="nav-item">
-                                <a class="nav-link " href="GetCurrentUserServlet.do">Profile</a>
+                                <a class="nav-link " th:href="@{/profile}">Profile</a>
                             </li>
 
                             <li class="nav-item">
@@ -175,12 +183,12 @@
 
                                 <div class="col-lg-6 col-12">
                                     <div class="services-thumb">
-                                        <img src="/images/services/boy-getting-haircut-salon-front-view.jpg" class="services-image img-fluid" alt="">
+                                        <img src="/images/services/tpbsm-homepage.jfif" class="services-image img-fluid" alt="">
 
                                         <div class="services-info d-flex align-items-end">
-                                            <h4 class="mb-0">Kids</h4>
+                                            <h4 class="mb-0">Hair cut</h4>
 
-                                            <strong class="services-thumb-price">R80.00</strong>
+                                            <strong class="services-thumb-price">R180.00</strong>
                                         </div>
                                     </div>
                                 </div>
@@ -193,8 +201,23 @@
                     <div class="container">
                         <div class="row">
 
+
+                            <div th:if="${param.success}" >
+                                <script>
+                                    swal({
+                                       title: "Seat Booked!",
+                                       text: "You have successfully booked a seat.",
+                                       icon: "success",
+                                       button: "Continue",
+                                     }).then(() => {
+                                       window.location.href = '/book';
+                                     });
+                                </script>
+                            </div>
+
+
                             <div class="col-lg-10 col-12 mx-auto">
-                                <form action="BookingServlet.do" method="post" class="custom-form booking-form" id="bb-booking-form" role="form">
+                                <form  th:action="@{/make-reservation}"  th:object="${booking}" method="post" class="custom-form booking-form" id="bb-booking-form" role="form">
                                     <div class="text-center mb-5">
                                         <h2 class="mb-1">Book a seat</h2>
                                         <p>Please fill out the form and we get back to you</p>
@@ -204,20 +227,25 @@
                                         <div class="row">
 
                                             <div class="col-lg-6 col-12">
+                                                <p class="pt-1 text-danger small" th:errors = "*{name}"  th:if="${#fields.hasErrors('name')}" ></p>
                                                 <input type="text" name="name" id="bb-name" class="form-control" placeholder="Full name" required>
                                             </div>
 
                                             <div class="col-lg-6 col-12">
-                                                <input type="number" class="form-control"  minlength="10"  maxlength="10" name="phone" placeholder="Mobile 071-177-0422"  required>
+                                                <p class="pt-1 text-danger small" th:errors = "*{contacts}"  th:if="${#fields.hasErrors('contacts')}" ></p>
+                                                <input type="text" class="form-control"  name="contacts" placeholder="Mobile 071-177-0422" required>
                                             </div>
                                         
                                             <div class="col-lg-6 col-12">
+                                                <p class="pt-1 text-danger small" th:errors = "*{time}"  th:if="${#fields.hasErrors('time')}" ></p>
                                                 <input class="form-control" type="time" name="time" value="08:30" />
                                             </div>
 
                                             <div class="col-lg-6 col-12">
+                                                <p class="pt-1 text-danger small" th:errors = "*{branch}"  th:if="${#fields.hasErrors('branch')}" ></p>
                                                 <select class="form-select form-control" name="branch" id="bb-branch" aria-label="Default select example">
-                                                    <option selected="">Select Branches</option>
+
+                                                    <option value="">Select Branches</option>
                                                     <option value="Giyani">Giyani</option>
                                                     <option value="Pretoria">Pretoria</option>
                                                     <option value="Johannesburg">Johannesburg</option>
@@ -227,17 +255,14 @@
 
                                             </div>
                                             <div class="col-lg-6 col-12">
+                                                <p class="pt-1 text-danger small" th:errors = "*{date}"  th:if="${#fields.hasErrors('date')}" ></p>
                                                 <input type="date" name="date" id="bb-date" class="form-control" placeholder="Date" required>
                                             </div>
 
                                             <div class="col-lg-6 col-12">
-                                                <input type="number" name="number" id="bb-number" class="form-control" placeholder="Number of People" required>
-                                            </div>
-                                        </div>
-                                        
-                                          <div class="">
+                                                <p class="pt-1 text-danger small" th:errors = "*{style}"  th:if="${#fields.hasErrors('style')}" ></p>
                                                 <select class="form-select form-control" name="style" id="bb-branch" aria-label="Default select example">
-                                                    <option selected="">Select Hair Style</option>
+                                                    <option value="">Select Hair Style</option>
                                                     <option value="Mohwack">Mohawk</option>
                                                     <option value="Buzz cut">Buzz cut</option>
                                                     <option value="Touch Line">Touch Line</option>
@@ -248,10 +273,14 @@
                                                     <option value="Taper Fade">Taper Fade</option>
                                                     <option value="Ivy league">Ivy league</option>
                                                     <option value="Man bun">Man bun</option>
-                                                    
+
                                                 </select>
 
                                             </div>
+
+                                        </div>
+                                        
+
 
                                         <div class="col-lg-4 col-md-10 col-8 mx-auto">
                                             <button type="submit" class="form-control">Submit</button>
