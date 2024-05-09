@@ -1,6 +1,5 @@
 package tut.ac.za.barbershop.controllers;
 
-
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,7 +14,6 @@ import tut.ac.za.barbershop.dto.CustomerLoginDto;
 import tut.ac.za.barbershop.entities.Customer;
 import tut.ac.za.barbershop.service.CustomerService;
 import tut.ac.za.barbershop.utils.SessionManager;
-
 
 @Controller
 public class AuthController {
