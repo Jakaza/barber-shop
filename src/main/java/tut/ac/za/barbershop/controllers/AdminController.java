@@ -56,6 +56,22 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/all-customers")
+    public String getAllCustomers(Model model, HttpSession session) {
+        Customer user = sessionManager.getCustomerFromSession(session.getId());
+        if (user != null) {
+
+            List<Customer> customers = customerService.findAllCustomers();
+
+            BookingStatusDto bookingStatusDto = new BookingStatusDto();
+            model.addAttribute("customers", customers);
+
+            return "viewCustomers";
+        }else{
+            return "redirect:/";
+        }
+    }
+
     private boolean isAdmin(Customer user) {
         System.out.println("isAdmin : email" + user.getEmail());
 

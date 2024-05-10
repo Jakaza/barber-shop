@@ -2,6 +2,7 @@ package tut.ac.za.barbershop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tut.ac.za.barbershop.dto.BookingDelDto;
 import tut.ac.za.barbershop.dto.BookingDto;
 import tut.ac.za.barbershop.dto.BookingStatusDto;
 import tut.ac.za.barbershop.entities.Booking;
@@ -44,13 +45,24 @@ public class BookingService {
     public void upDateBookingStatus(BookingStatusDto bookingStatusDto) {
         Optional<Booking> Booking = bookingRepository.findById(bookingStatusDto.getBookingId());
         if(Booking.isPresent()){
+
             Booking booking = Booking.get();
-            booking.setStatus(bookingStatusDto.getStatus());
+
+            if (!"00:00".equals(bookingStatusDto.getTime())) {
+                booking.setTime(bookingStatusDto.getTime());
+            }
+            if(!bookingStatusDto.getStatus().isEmpty() && bookingStatusDto.getStatus() != null){
+                booking.setStatus(bookingStatusDto.getStatus());
+            }
             bookingRepository.save(booking);
         }
     }
     public List<Booking> getBookingsById(Long id) {
        List<Booking> bookings = bookingRepository.findByCustomerId(id);
        return  bookings;
+    }
+
+    public void deleteReservation(BookingDelDto booking) {
+        bookingRepository.deleteById(booking.getBookingId());
     }
 }

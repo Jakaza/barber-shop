@@ -7,6 +7,7 @@ import tut.ac.za.barbershop.repository.CustomerRepository;
 import tut.ac.za.barbershop.utils.PasswordEncryptor;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
@@ -40,6 +41,11 @@ public class CustomerServiceImpl implements CustomerService{
             }
         }
         return null;
+    }
+
+    @Override
+    public List<Customer> findAllCustomers() {
+        return customerRepository.findAll();
     }
 
     @Override

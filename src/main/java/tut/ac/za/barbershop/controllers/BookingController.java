@@ -10,6 +10,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import tut.ac.za.barbershop.dto.BookingDelDto;
 import tut.ac.za.barbershop.dto.BookingDto;
 import tut.ac.za.barbershop.dto.BookingStatusDto;
 import tut.ac.za.barbershop.entities.Booking;
@@ -61,6 +63,18 @@ public class BookingController {
         }
     }
 
+    @PostMapping("/delete-reservation")
+    public String deleteReservation(@Valid @ModelAttribute("bookingDel") BookingDelDto bookingDelDto,
+                                    Model model, HttpSession session){
+        Customer customer = sessionManager.getCustomerFromSession(session.getId());
+        if (customer == null) {
+            return "redirect:/login";
+        }else{
+            bookingService.deleteReservation(bookingDelDto);
+            return "redirect:/all-bookings?delsuccess";
+        }
+    }
+
     @PostMapping("/update-booking-status")
     public String upDateBookingStatus(@Valid @ModelAttribute("bookingStatus") BookingStatusDto bookingStatusDto,
                            Model model, HttpSession session){
@@ -71,7 +85,7 @@ public class BookingController {
         }else{
             model.addAttribute("bookingStatusDto", bookingStatusDto);
 
-            if(bookingStatusDto.getStatus() == "" || bookingStatusDto.getStatus() == null){
+            if((bookingStatusDto.getStatus().isEmpty() && bookingStatusDto.getStatus() == null) && "00:00".equals(bookingStatusDto.getTime()) ){
                 System.out.println("Something went wrong");
                 System.out.println("Errors:");
                 return "redirect:/all-bookings?error=Please select booking status to update";

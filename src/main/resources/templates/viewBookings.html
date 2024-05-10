@@ -34,6 +34,19 @@
     </script>
 </div>
 
+<div th:if="${param.delsuccess}" >
+    <script>
+        swal({
+           title: "Slot Deleted",
+           text: "You have successfully deleted booking.",
+           icon: "success",
+           button: "Continue",
+         }).then(() => {
+          window.location.href = '/all-bookings';
+         });
+    </script>
+</div>
+
 <div th:if="${param.error}">
     <script>
         swal({
@@ -109,7 +122,7 @@
                                     <div class="modal-content">
                                         <!-- Modal content -->
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="updateDetails">Modal title</h1>
+                                            <h1 class="modal-title fs-5" id="updateDetails">Edit or Delete Booking</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
@@ -118,13 +131,12 @@
 
                                                 <div class="mb-1">
                                                     <label for="status" class="form-label"> Current Booked  Slot</label>
-                                                    <p  th:text="${booking.time}"> </p>
-
-
-
+                                                    <p  th:text="${booking.time} +' and status : ' + ${booking.status}"> </p>
                                                 </div>
-
-
+                                                <div class="col-lg-6 col-12">
+                                                    <label for="status" class="form-label">To Change Time Select Below</label>
+                                                    <input class="form-control" type="time" name="time" value="00:00" />
+                                                </div>
                                                 <div class="mb-1">
                                                     <label for="status" class="form-label">Status:</label>
                                                     <select name="status" class="form-select" aria-label="">
@@ -134,15 +146,16 @@
                                                         <option value="Done">Done</option>
                                                     </select>
                                                 </div>
+                                                <br/>
                                                 <div class="mb-1">
                                                     <input type="hidden" name="bookingId" th:value="${booking.id}">
                                                     <input type="submit" class="btn btn-sm btn-primary" value="Update Status">
                                                 </div>
                                             </form>
                                             <br>
-                                            <form action="DeleteBookingsServlet.do" method="POST">
+                                            <form th:action="@{/delete-reservation}"  method="POST" >
                                                 <div class="mb-1">
-                                                    <input type="hidden" name="booking_id" th:value="${booking.id}">
+                                                    <input type="hidden" name="bookingId" th:value="${booking.id}">
                                                     <input type="submit" class="btn btn-sm btn-danger" value="Delete">
                                                 </div>
                                             </form>
