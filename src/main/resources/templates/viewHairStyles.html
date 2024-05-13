@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Barber Shop - User Profile</title>
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500&display=swap" rel="stylesheet">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+
+    <link href="css/templatemo-barber-shop.css" rel="stylesheet">
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+
+<body>
+
+
+<div th:if="${param.success}" >
+    <script>
+        swal({
+           title: "Hair-Style Created",
+           text: "You have successfully added new hair style.",
+           icon: "success",
+           button: "Continue",
+         }).then(() => {
+          window.location.href = '/all-hair-style';
+         });
+    </script>
+</div>
+
+<div th:if="${param.updatesuccess}" >
+    <script>
+        swal({
+           title: "Hair-style updated",
+           text: "You have successfully updated hair-style.",
+           icon: "success",
+           button: "Continue",
+         }).then(() => {
+          window.location.href = '/all-hair-style';
+         });
+    </script>
+</div>
+<div th:if="${param.error}">
+    <script>
+        swal({
+           title: "Something went wrong",
+           text: "Hair style was not updated... try again",
+           icon: "error",
+           button: "Continue",
+         }).then(() => {
+           window.location.href = '/all-hair-style';
+         });
+    </script>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <button class="navbar-toggler d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <nav id="sidebarMenu" class="col-md-4 col-lg-3 d-md-block sidebar collapse p-0">
+
+            <div class="position-sticky sidebar-sticky d-flex flex-column justify-content-center align-items-center">
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/templatemo-barber-logo.png" class="logo-image img-fluid" align="">
+                </a>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="#section_1">Profile Page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link "  th:href="@{/logout}">Log-out</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="col-md-8  ms-sm-auto col-lg-9 p-0">
+            <section class=" d-flex justify-content-center align-items-center" id="section_1">
+
+                <div class="container">
+                    <br>
+
+                    <div >
+                        <a  th:href="@{/dashboard}" class="btn btn-success mt-3">Back</a>
+                        <p class="pt-5">List Of All Available Hair-Styles</p>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="text-center">S.N.</th>
+                                <th class="text-center">Hair Style Name</th>
+                                <th class="text-center">Price</th>
+                                <th class="text-center" colspan="2">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody id="productTableBody">
+                            <!-- Products will be dynamically added here -->
+                            <tr th:each="hairStyle, i : ${hairStyles}">
+                                <td class="text-center" th:text="${i.index + 1}"></td>
+                                <td class="text-center" th:text="${hairStyle.name}"></td>
+                                <td class="text-center" th:text="'R' + ${hairStyle.price}"></td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" th:data-bs-target="'#updateDetails' + ${hairStyle.id}">Edit</button>
+
+                                </td>
+                            </tr>
+
+                            <tr th:each="hairStyle, i : ${hairStyles}">
+                                <!-- Modal -->
+                                <div class="modal fade" th:id="'updateDetails' + ${hairStyle.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Update Hair-Style</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" th:action="@{/admin/hairstyle/update}"  th:object="${hairstyle}">
+                                                        <div class="form-group">
+                                                            <label for="p_name">Hair Style Name :</label>
+                                                            <input type="text" class="form-control" id="p_name"  th:value="${hairStyle.name}" name="name"  required>
+                                                        </div>
+
+                                                        <input type="hidden" class="form-control" id="p_name"  th:value="${hairStyle.id}" name="id">
+
+                                                        <br/>
+
+                                                        <div class="form-group">
+                                                            <label for="p_price">Price:</label>
+                                                            <input type="number" class="form-control" id="p_price"  th:value="${hairStyle.price}"  name="price" required>
+                                                        </div>
+
+                                                        <br/>
+                                                        <br/>
+
+                                                        <div class="form-group">
+                                                            <button type="submit" class="btn btn-secondary" id="upload" style="height:40px">Update Hair-Style</button>
+                                                        </div>
+
+
+                                                    </form>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div >
+                        <button type="button" class="btn btn-primary mt-3" style="height:40px" data-bs-toggle="modal" th:data-bs-target="'#addHairStly'">
+                            Add New Style
+                        </button>
+
+
+
+                    </div>
+                </div>
+
+
+                <!-- Modal -->
+                <div class="modal fade"  th:id="'addHairStly'" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">New Hair-Style</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" th:action="@{/admin/hairstyle/create}"  th:object="${hairstyle}">
+                                    <div class="form-group">
+                                        <label for="p_name">Hair Style Name :</label>
+                                        <input type="text" class="form-control" id="p_name" name="name" required>
+                                    </div>
+                                    <br/>
+                                    <div class="form-group">
+                                        <label for="p_price">Price:</label>
+                                        <input type="number" class="form-control" id="p_price" name="price" required>
+                                    </div>
+                                    <br/>
+                                    <br/>
+
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-secondary" id="upload" style="height:40px">Add Hair-Style</button>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </section>
+        </div>
+        <!-- JAVASCRIPT FILES -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/click-scroll.js"></script>
+        <script src="js/custom.js"></script>
+
+</body>
+</html>
+<a href="entry_page.html"></a>

@@ -1,13 +1,23 @@
 # barber-shop
-spring.application.name=barber-shop
 
-spring.data.mongodb.uri=mongodb+srv://barber:barber@barbershop.8w5oltz.mongodb.net/barberdb?retryWrites=true&w=majority
+## Admin Login Credentials
+> - ### email : myadmin@gmail.com
+> - ### password: myadmin10
 
-#spring.data.mongodb.host=localhost
-#spring.data.mongodb.port=27017
-#spring.data.mongodb.database=demo
-#spring.data.mongodb.username=username_value  (optional)
-#spring.data.mongodb.password=password_value (optional)
+[//]: # (spring.application.name=barber-shop)
+
+[//]: # (spring.data.mongodb.uri=mongodb+srv://barber:barber@barbershop.8w5oltz.mongodb.net/barberdb?retryWrites=true&w=majority)
+
+[//]: # ()
+[//]: # (#spring.data.mongodb.host=localhost)
+
+[//]: # (#spring.data.mongodb.port=27017)
+
+[//]: # (#spring.data.mongodb.database=demo)
+
+[//]: # (#spring.data.mongodb.username=username_value  &#40;optional&#41;)
+
+[//]: # (#spring.data.mongodb.password=password_value &#40;optional&#41;)
 
 
 

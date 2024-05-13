@@ -1,12 +1,5 @@
-<%-- 
-    Document   : invalid_user_page.
-    Created on : 22 May 2023, 12:57:59 PM
-    Author     : Student
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,11 +16,11 @@
 
         <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500&display=swap" rel="stylesheet">
 
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
 
-        <link href="css/bootstrap-icons.css" rel="stylesheet">
+        <link href="/css/bootstrap-icons.css" rel="stylesheet">
 
-        <link href="css/templatemo-barber-shop.css" rel="stylesheet">
+        <link href="/css/templatemo-barber-shop.css" rel="stylesheet">
 
         <link rel="stylesheet" href="/css/index.css">
         <!--
@@ -53,12 +46,12 @@
 
                     <div class="position-sticky sidebar-sticky d-flex flex-column justify-content-center align-items-center">
                         <a class="navbar-brand" href="index.html">
-                            <img src="images/templatemo-barber-logo.png" class="logo-image img-fluid" align="">
+                            <img src="/images/templatemo-barber-logo.png" class="logo-image img-fluid" align="">
                         </a>
 
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link click-scroll" href="#section_1">Phone Error</a>
+                                <a class="nav-link click-scroll" href="#section_1">Page Not Found 404 </a>
                             </li>
 
                         </ul>
@@ -69,20 +62,20 @@
 
                         <div class="container ">
                             
-                            <p class="pt-5 text-danger">User not Found</p>
+                            <p class="pt-5 text-danger">Page Not Found</p>
                             
-                            <p class="pt-5 muted small">Enter correct credentials</p>
+                            <p class="pt-5 muted small">The page you're trying to access does not exist. </p>
                              
-                            <a href="user_login.jsp" class="btn btn-success mt-3">login page</a>
+                            <a  th:href="@{/}"class="btn btn-success mt-3">Home page</a>
                         </div>
 
                     </section>
                 </div>
                 <!-- JAVASCRIPT FILES -->
-                <script src="js/jquery.min.js"></script>
-                <script src="js/bootstrap.min.js"></script>
-                <script src="js/click-scroll.js"></script>
-                <script src="js/custom.js"></script>
+                <script src="/js/jquery.min.js"></script>
+                <script src="/js/bootstrap.min.js"></script>
+                <script src="/js/click-scroll.js"></script>
+                <script src="/js/custom.js"></script>
 
                 </body>
                </html>

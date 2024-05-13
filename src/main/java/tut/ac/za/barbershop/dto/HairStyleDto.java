@@ -4,6 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 
 public class HairStyleDto {
+
+    private Long id;
+
     @NotBlank(message = "Name cannot be blank")
     private String name;
 
@@ -27,5 +30,13 @@ public class HairStyleDto {
 
     public void setPrice(@Positive(message = "Price must be positive") double price) {
         this.price = price;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

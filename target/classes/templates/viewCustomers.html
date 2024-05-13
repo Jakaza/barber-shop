@@ -52,7 +52,7 @@
                     <section class=" d-flex justify-content-center align-items-center" id="section_1">
 
                         <div class="container">
-                            <a href="admin_page.jsp" class="btn btn-success mt-3">Back</a>
+                            <a  th:href="@{/dashboard}" class="btn btn-success mt-3">Back</a>
                             <p class="pt-5">List Of People Who Booked Seats</p>
                             <table class="table table-striped">
                                 <thead>
@@ -64,7 +64,6 @@
                                     <th scope="col">Age</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Registered Date</th>
-                                    <th scope="col">Actions</th> <!-- Added for actions -->
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -76,41 +75,11 @@
                                     <td th:text="${customer.age}"></td>
                                     <td th:text="${customer.email}"></td>
                                     <td th:text="${#dates.format(customer.creationDate, 'yyyy-MM-dd')}"></td>
-                                    <td>
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" th:data-bs-target="'#updateDetails' + ${customer.id}">
-                                            Update
-                                        </button>
-                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
 
-                        <!-- Modals -->
-                        <div th:each="customer, i : ${customers}">
-                            <div class="modal fade" th:id="'updateDetails' + ${customer.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" th:text="'Update Details for ' + ${customer.firstname}"></h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-
-                                            <div class="mb-1">
-                                                <a th:if="${customer.blocked}" th:href="@{/unblock-customer(customerId=${customer.id})}" class="btn btn-sm btn-primary">Unblock</a>
-                                                <a th:unless="${customer.blocked}" th:href="@{/block-customer(customerId=${customer.id})}" class="btn btn-sm btn-danger">Block</a>
-                                            </div>
-                                            <br>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                     </section>
                 </div>

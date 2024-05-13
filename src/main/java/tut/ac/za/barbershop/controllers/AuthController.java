@@ -12,25 +12,31 @@ import tut.ac.za.barbershop.dto.BookingDto;
 import tut.ac.za.barbershop.dto.CustomerDto;
 import tut.ac.za.barbershop.dto.CustomerLoginDto;
 import tut.ac.za.barbershop.entities.Customer;
+import tut.ac.za.barbershop.entities.HairStyle;
 import tut.ac.za.barbershop.service.CustomerService;
+import tut.ac.za.barbershop.service.HaireStyleService;
 import tut.ac.za.barbershop.utils.SessionManager;
+
+import java.util.List;
 
 @Controller
 public class AuthController {
 
     private final SessionManager sessionManager;
     private final CustomerService customerService;
+    private final HaireStyleService haireStyleService;
 
-    public AuthController(SessionManager sessionManager, CustomerService customerService) {
+    public AuthController(SessionManager sessionManager, CustomerService customerService, HaireStyleService haireStyleService) {
         this.sessionManager = sessionManager;
         this.customerService = customerService;
+        this.haireStyleService = haireStyleService;
     }
 
     @GetMapping("/")
     public String home(Model model , HttpSession session){
         Customer customer = sessionManager.getCustomerFromSession(session.getId());
         if(customer != null){
-            if(customer.getEmail().equals("myadmin@gmail.com") && customer.getPassword().equals("admin")){
+            if(customer.getEmail().equals("myadmin@gmail.com")){
                 return "redirect:/dashboard";
             }
             return "redirect:/book";
@@ -43,6 +49,11 @@ public class AuthController {
         Customer customer = sessionManager.getCustomerFromSession(session.getId());
 
         if (customer != null) {
+
+            List<HairStyle> hairStyles = haireStyleService.findAllHairStyles();
+
+            model.addAttribute("hairStyles", hairStyles);
+
             BookingDto bookingDto = new BookingDto();
             model.addAttribute("booking", bookingDto);
             session.setAttribute("authenticated", true);
@@ -101,7 +112,7 @@ public class AuthController {
                             Model model , HttpSession session){
         Customer customer = customerService.customerLogin(customerLoginDto.getEmail(), customerLoginDto.getPassword());
 
-        if (customerLoginDto.getEmail().equals("myadmin@gmail.com") && customerLoginDto.getPassword().equals("admin")) {
+        if (customerLoginDto.getEmail().equals("myadmin@gmail.com") && customerLoginDto.getPassword().equals("myadmin10")) {
             Customer admin = new Customer();
             admin.setEmail("myadmin@gamil.com");
             admin.setPassword("admin");

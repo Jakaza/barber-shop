@@ -263,17 +263,9 @@
                                                 <p class="pt-1 text-danger small" th:errors = "*{style}"  th:if="${#fields.hasErrors('style')}" ></p>
                                                 <select class="form-select form-control" name="style" id="bb-branch" aria-label="Default select example">
                                                     <option value="">Select Hair Style</option>
-                                                    <option value="Mohwack">Mohawk</option>
-                                                    <option value="Buzz cut">Buzz cut</option>
-                                                    <option value="Touch Line">Touch Line</option>
-                                                    <option value="Crew cut">Crew cut</option>
-                                                    <option value="Combo over">Combo-over</option>
-                                                    <option value="High Top Fade">High Top Fade</option>
-                                                    <option value="Faux Hawk">Faux Hawk</option>
-                                                    <option value="Taper Fade">Taper Fade</option>
-                                                    <option value="Ivy league">Ivy league</option>
-                                                    <option value="Man bun">Man bun</option>
-
+                                                    <th:block th:each="style : ${hairStyles}">
+                                                        <option th:value="${style.name}" th:text="${style.name} +' ( R'+ ${style.price} + ' )' "></option>
+                                                    </th:block>
                                                 </select>
 
                                             </div>
